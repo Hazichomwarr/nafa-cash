@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NAFA CASH
+
+NAFA CASH is a remittance platform that allows users to send money to Burkina Faso quickly, securely, and directly to Orange Money wallets.
+
+---
+
+## 🚀 Overview
+
+NAFA CASH enables:
+
+- 💸 Fast money transfers from the US to Burkina Faso
+- 📱 Direct delivery to Orange Money wallets
+- 🔒 Secure payments powered by Stripe
+- 📊 Real-time transaction tracking
+
+---
+
+## 🧱 Tech Stack
+
+- **Frontend:** Next.js (App Router)
+- **Backend:** Next.js API Routes
+- **Database:** PostgreSQL (via Prisma)
+- **Payments:** Stripe Checkout + Webhooks
+- **Styling:** Tailwind CSS
+
+---
+
+## ⚙️ Core Features
+
+- Create transactions
+- Stripe payment integration
+- Webhook-based payment confirmation
+- Admin dashboard for payout processing
+- Transaction history tracking
+- Status lifecycle: `PENDING → PAID → COMPLETED`
+
+---
+
+## 🧠 Architecture
+
+User → Next.js App → API → Database (Prisma)
+↓
+Stripe
+↓
+Webhook
+↓
+Update DB
+↓
+Admin payout
+
+---
 
 ## Getting Started
 
-First, run the development server:
+1. Install dependencies:
+   `pnpm install `
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. Setup environment variables:
+   Create a .env file:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+DATABASE_URL=your_database_url
+STRIPE_SECRET_KEY=your_stripe_secret
+STRIPE_WEBHOOK_SECRET=your_webhook_secret
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Run database migrations
+   `npx prisma migrate dev`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Start development server
+   pnpm dev
 
-## Learn More
+5. Visit:
 
-To learn more about Next.js, take a look at the following resources:
+http://localhost:3000
+🔌 Stripe Webhook (Local Development)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+6. Run:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+stripe listen --forward-to localhost:3000/api/webhooks/stripe
 
-## Deploy on Vercel
+### 📊 Transaction Flow
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- User creates transaction
+- Redirect to Stripe Checkout
+- User completes payment
+- Stripe sends webhook
+- Transaction marked as PAID
+- Admin processes payout
+- Transaction marked as COMPLETED
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## ⚠️ Notes
+
+This is an MVP system with manual payout handling
+FX rates are currently static (will be dynamic later)
+Admin authentication is not yet implemented
+
+## 📌 Roadmap
+
+- Authentication system
+- Automated payout integration
+- Real-time status updates
+- Multi-country support
+- Mobile optimization
+
+## 🤝 Contributing
+
+This project is currently in active development.
+
+## 📄 License
+
+Private — NAFA CASH
