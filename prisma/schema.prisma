@@ -54,6 +54,7 @@ model Transaction {
   id        String   @id @default(uuid())
   amount    Int
   currency  String   @default("XOF")
+  country   String   @default("BURKINA")
 
   status TransactionStatus @default(PENDING)
 
