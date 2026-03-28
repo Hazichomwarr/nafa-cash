@@ -1,6 +1,6 @@
 import { Container, Stack } from "@/components/ui";
-import SendMoneyForm from "./forms/SendMoneyForm";
 import Link from "next/link";
+import SendFlow from "./forms/SendFlow";
 
 export default function Hero() {
   return (
@@ -31,7 +31,7 @@ export default function Hero() {
 
             {/* FORM (Calculator) */}
             <div className="bg-white text-black rounded-xl shadow-lg max-w-md md:min-w-lg md:mx-auto p-6">
-              <SendMoneyForm />
+              <SendFlow />
             </div>
 
             <div className="text-xl border border-neutral-300 hover:bg-neutral-700 px-4 py-2 text-center rounded-2xl cursor-pointer active:scale-95 hover:border-none">

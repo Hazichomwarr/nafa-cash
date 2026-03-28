@@ -1,30 +1,31 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Card,
-  CardContent,
-  Stack,
-  Button,
-  Input,
-  Field,
-} from "@/components/ui";
+import { Stack, Input, Button, Field } from "@/components/ui";
+import { AREAS_COVERED } from "./MoneyCalculator";
 
-export default function SendMoneyForm() {
-  const [amount, setAmount] = useState("");
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+export default function SendMoneyForm({
+  initialData,
+}: {
+  initialData: {
+    amountToSend: number;
+    recipientName: string;
+    currency: string;
+  };
+}) {
   const [email, setEmail] = useState("");
-  const [location, setLocation] = useState("US");
+  const [phone, setPhone] = useState("");
+  const [country, setCountry] = useState("USA");
 
   const handleSubmit = async () => {
     const res = await fetch("/api/transactions", {
       method: "POST",
       body: JSON.stringify({
-        amount: Number(amount),
-        recipientName: name,
+        usdAmount: initialData.amountToSend,
+        recipientName: initialData.recipientName,
         recipientPhone: phone,
-        senderId: "HARDCODED_USER",
+        email,
+        country,
       }),
     });
 
@@ -36,36 +37,40 @@ export default function SendMoneyForm() {
   };
 
   return (
-    <Card>
-      <CardContent>
-        <Stack gap={4}>
-          <Field label="Amount (CFA)">
-            <Input
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              placeholder="5000"
-            />
-          </Field>
+    <Stack gap={4}>
+      <h2 className="text-xl font-semibold">Complete Ton Transfert</h2>
 
-          <Field label="Recipient Name">
-            <Input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Adama"
-            />
-          </Field>
+      {/* SENDER */}
+      <Field label="Ton Email">
+        <Input value={email} onChange={(e) => setEmail(e.target.value)} />
+      </Field>
 
-          <Field label="Phone Number">
-            <Input
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="+226..."
-            />
-          </Field>
+      <Field label="Ton Telephone">
+        <Input value={phone} onChange={(e) => setPhone(e.target.value)} />
+      </Field>
 
-          <Button>Continue to Payment</Button>
-        </Stack>
-      </CardContent>
-    </Card>
+      <Field label="Où êtes-vous ?">
+        <select
+          className="w-full border px-3 py-2 rounded-md"
+          value={country}
+          onChange={(e) => setCountry(e.target.value)}
+        >
+          {AREAS_COVERED.map((a) => (
+            <option key={a.slug} value={a.slug}>
+              {a.label}
+            </option>
+          ))}
+        </select>
+      </Field>
+
+      {/* RECIPIENT CONFIRM */}
+      <div className="bg-neutral-100 p-3 rounded-md">
+        <p className="text-sm">
+          Sending to <strong>{initialData.recipientName}</strong>
+        </p>
+      </div>
+
+      <Button onClick={handleSubmit}>Continue to Payment</Button>
+    </Stack>
   );
 }

@@ -1,10 +1,16 @@
-export function convertUsdToCfa(usd: number) {
-  const REAL_RATE = 560; // later from API
-  const MARGIN = 0.05; // 5%
+export function convertToCfa(amount: number, currency: string) {
+  const rates: Record<string, number> = {
+    USD: 565,
+    EUR: 650,
+    CAD: 440,
+    UK: 700,
+  }; // later from API
 
-  const effectiveRate = REAL_RATE * (1 - MARGIN);
+  const MARGIN = 0.1; // 10%
+  const baseRate = rates[currency] || 565;
+  const effectiveRate = baseRate * (1 - MARGIN);
 
-  const cfa = usd * effectiveRate;
+  const cfa = amount * effectiveRate;
 
   return {
     cfa: Math.round(cfa),
