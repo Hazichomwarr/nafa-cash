@@ -1,10 +1,10 @@
-import { Button, Container, Stack } from "@/components/ui";
-import SendMoneyForm from "./SendMoneyForm";
+import { Container, Stack } from "@/components/ui";
+import SendMoneyForm from "./forms/SendMoneyForm";
 import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="relative h-[600px] md:h-[700] py-18 bg-linear-to-br from-blue-700 to-orange-400 text-white">
+    <section className="relative h-150 md:h-[700] py-18 bg-linear-to-br from-blue-700 to-orange-400 text-white">
       {/* BACKGROUND IMAGE */}
       <div
         className="absolute inset-0 bg-cover bg-right md:bg-center"
