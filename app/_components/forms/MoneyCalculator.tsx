@@ -47,7 +47,7 @@ export default function MoneyCalculator() {
       <Field label="Nom du Receveur">
         <Input
           placeholder="Ex: Adama"
-          type="number"
+          type="text"
           value={recipientName}
           onChange={(e) => setRecipientName(e.target.value)}
         />

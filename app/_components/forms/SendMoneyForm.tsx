@@ -49,6 +49,9 @@ export default function SendForm() {
 
       const res = await fetch("/api/transactions", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           senderName,
           email,
@@ -67,6 +70,7 @@ export default function SendForm() {
         window.location.href = data.checkoutUrl;
       } else {
         alert("Une erreur est survenue.");
+        console.log("API ERROR:", data);
       }
     } catch (err) {
       alert("Erreur réseau.");

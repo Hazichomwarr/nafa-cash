@@ -9,10 +9,14 @@ import { notFound } from "next/navigation";
 
 // const USER_ID = "8cfe3267-88f1-4bec-b9ad-73dbdecfabd5";
 
-type Props = { searchParams: { email?: string } };
+type Props = {
+  searchParams: Promise<{ email?: string }>;
+};
 
 export default async function HistoryPage({ searchParams }: Props) {
-  const email = searchParams.email;
+  const params = await searchParams;
+  const email = params.email;
+
   if (!email) return notFound();
   const transactions: TransactionArray = await getUserTransactions(email);
   return (

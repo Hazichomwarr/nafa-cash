@@ -4,11 +4,12 @@ import { Button } from "@/components/ui";
 import Link from "next/link";
 
 type Props = {
-  searchParams: { session_id?: string };
+  searchParams: Promise<{ session_id?: string }>;
 };
 
 export default async function SuccessPage({ searchParams }: Props) {
-  const sessionId = searchParams.session_id;
+  const params = await searchParams;
+  const sessionId = params.session_id;
 
   if (!sessionId) return <div>Invalid session</div>;
 
@@ -43,13 +44,13 @@ export default async function SuccessPage({ searchParams }: Props) {
         </p>
 
         {/* BUTTONS */}
-        <div className="flex gap-3 mt-6">
+        <div className="flex gap-3 mt-6 justify-center">
           <Link href="/">
             <Button variant="secondary">Accueil</Button>
           </Link>
 
           <Link href={`/history?email=${email}`}>
-            <Button>Voir mes transferts</Button>
+            <Button>Mes transferts</Button>
           </Link>
         </div>
       </div>
