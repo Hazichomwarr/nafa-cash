@@ -3,7 +3,7 @@ export function convertToCfa(amount: number, currency: string) {
     USD: 565,
     EUR: 650,
     CAD: 440,
-    UK: 700,
+    QUID: 700,
   }; // later from API
 
   const MARGIN = 0.1; // 10%

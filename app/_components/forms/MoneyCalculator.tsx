@@ -3,22 +3,17 @@
 import { Button, Field, Input, Stack } from "@/components/ui";
 import { convertToCfa } from "@/lib/moneyConverter";
 import { useState } from "react";
-
-type Props = {
-  onContinue: (data: {
-    amountToSend: number;
-    recipientName: string;
-    currency: string;
-  }) => void;
-};
+import { useRouter } from "next/navigation";
 
 export const AREAS_COVERED = [
-  { slug: "US", label: "United States (USD)" },
+  { slug: "USD", label: "United States (USD)" },
   { slug: "EUR", label: "Europe (EUR)" },
   { slug: "QUID", label: "UNITED KINGDOM (UK)" },
   { slug: "CAD", label: "CANADA (CAD)" },
 ];
-export default function MoneyCalculator({ onContinue }: Props) {
+export default function MoneyCalculator() {
+  const router = useRouter();
+
   const [currency, setCurrency] = useState<string>("USD");
   const [recipientName, setRecipientName] = useState<string>("");
   const [amountToSend, setAmountToSend] = useState<number>(100);
@@ -67,10 +62,7 @@ export default function MoneyCalculator({ onContinue }: Props) {
           {cfa.toLocaleString()} CFA
         </p>
       </div>
-      <Button
-        onClick={() => onContinue({ amountToSend, recipientName, currency })}
-        type="button"
-      >
+      <Button onClick={() => router.push("/send")} type="button">
         Continue pour envoyer
       </Button>
     </Stack>

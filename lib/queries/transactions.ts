@@ -3,9 +3,9 @@
 import { Prisma } from "@prisma/client";
 import { db } from "../db";
 
-export const getUserTransactions = (userId: string) => {
+export const getUserTransactions = (user_id: string) => {
   return db.transaction.findMany({
-    where: { senderId: userId },
+    where: { id: user_id },
     select: {
       id: true,
       amount: true,

@@ -29,6 +29,7 @@ export async function POST(req: NextRequest) {
         const session = event.data.object as Stripe.Checkout.Session;
 
         const transactionId = session.metadata?.transactionId;
+
         if (!transactionId) {
           console.error("Missing transactionId in metadata");
           break;
@@ -87,7 +88,22 @@ export async function POST(req: NextRequest) {
         console.log("❌ Payment failed:", paymentIntent.id);
         break;
       }
+      case "checkout.session.async_payment_succeeded": {
+        const session = event.data.object as Stripe.Checkout.Session;
 
+        const transactionId = session.metadata?.transactionId;
+        if (!transactionId) break;
+
+        await db.transaction.update({
+          where: { id: transactionId },
+          data: {
+            status: "PAID",
+            stripePaymentStatus: "SUCCEEDED",
+          },
+        });
+
+        break;
+      }
       default:
         console.log(`ℹ️ Unhandled event: ${event.type}`);
     }

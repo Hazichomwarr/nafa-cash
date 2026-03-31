@@ -15,6 +15,7 @@ export async function POST(req: NextRequest) {
     where: { id: transactionId },
     data: {
       status: "COMPLETED",
+      updatedAt: new Date(),
     },
   });
 

@@ -1,7 +1,7 @@
 import Hero from "./_components/Hero";
 import TrustSection from "./_components/TrustSection";
 import CTASection from "./_components/CTASection";
-import { Container, Stack } from "@/components/ui";
+import { Stack } from "@/components/ui";
 
 export default function HomePage() {
   return (

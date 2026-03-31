@@ -5,12 +5,16 @@ import {
   TransactionArray,
   TransactionType,
 } from "@/lib/queries/transactions";
+import { notFound } from "next/navigation";
 
-const USER_ID = "8cfe3267-88f1-4bec-b9ad-73dbdecfabd5";
+// const USER_ID = "8cfe3267-88f1-4bec-b9ad-73dbdecfabd5";
 
-export default async function HistoryPage() {
-  const transactions: TransactionArray = await getUserTransactions(USER_ID);
+type Props = { searchParams: { email?: string } };
 
+export default async function HistoryPage({ searchParams }: Props) {
+  const email = searchParams.email;
+  if (!email) return notFound();
+  const transactions: TransactionArray = await getUserTransactions(email);
   return (
     <section className="py-12 bg-neutral-50">
       <Container>
@@ -18,7 +22,9 @@ export default async function HistoryPage() {
           <h1 className="text-4xl font-bold text-neutral-900 tracking-tight md:text-6xl">
             Your Transfers
           </h1>
-
+          <p className="text-sm text-neutral-500">
+            Dernière mise à jour il y a quelques secondes
+          </p>
           <Stack>
             {transactions.map((tx: TransactionType) => (
               <Card key={tx.id}>
@@ -35,44 +41,28 @@ export default async function HistoryPage() {
 }
 
 function TransactionItem({ tx }: { tx: TransactionType }) {
-  const statusMap = {
-    PENDING: "text-yellow-600",
-    PAID: "text-yellow-600",
-    PROCESSING: "text-yellow-600",
-    COMPLETED: "text-green-600",
-    CANCELLED: "text-red-600",
+  const map = {
+    PENDING: { label: "En attente", color: "text-yellow-600" },
+    PAID: { label: "Paiement reçu", color: "text-yellow-600" },
+    PROCESSING: { label: "En cours", color: "text-yellow-600" },
+    COMPLETED: { label: "Terminé", color: "text-green-600" },
+    CANCELLED: { label: "Échec", color: "text-red-600" },
   };
-  const labelMap = {
-    PENDING: "Processing",
-    PAID: "Processing",
-    PROCESSING: "Processing",
-    COMPLETED: "Completed",
-    CANCELLED: "Failed",
-  };
-  return (
-    <div>
-      <div className="flex justify-between items-center">
-        {/* LEFT */}
-        <Stack gap={2}>
-          <p className="font-semibold text-neutral-700">{tx.recipient.name}</p>
-          <p className="font-semibold text-neutral-700">{tx.country}</p>
-          <p className="text-sm text-neutral-500">
-            {new Date(tx.createdAt).toLocaleString()}
-          </p>
-        </Stack>
 
-        {/* RIGHT */}
-        <Stack gap={2}>
-          <p className="font-semibold text-neutral-700">
-            #{tx.id.slice(0, 8).toUpperCase()}
-          </p>
-          <p className="font-semibold text-neutral-700">
-            {tx.amount.toLocaleString()} CFA
-          </p>
-          <p className={`text-sm ${statusMap[tx.status]}`}>
-            {labelMap[tx.status]}
-          </p>
-        </Stack>
+  const status = map[tx.status];
+
+  return (
+    <div className="flex justify-between">
+      <div>
+        <p className="font-semibold">{tx.recipient.name}</p>
+        <p className="text-sm text-neutral-500">
+          {new Date(tx.createdAt).toLocaleString()}
+        </p>
+      </div>
+
+      <div className="text-right">
+        <p>{tx.amount.toLocaleString()} CFA</p>
+        <p className={`${status.color} text-sm font-medium`}>{status.label}</p>
       </div>
     </div>
   );

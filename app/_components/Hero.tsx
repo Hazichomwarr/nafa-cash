@@ -1,10 +1,10 @@
 import { Container, Stack } from "@/components/ui";
 import Link from "next/link";
-import SendFlow from "./forms/SendFlow";
+import MoneyCalculator from "./forms/MoneyCalculator";
 
 export default function Hero() {
   return (
-    <section className="relative h-150 md:h-[700] py-18 bg-linear-to-br from-blue-700 to-orange-400 text-white">
+    <section className="relative min-h-screen py-18 bg-linear-to-br from-blue-700 to-orange-400 text-white">
       {/* BACKGROUND IMAGE */}
       <div
         className="absolute inset-0 bg-cover bg-right md:bg-center"
@@ -31,7 +31,7 @@ export default function Hero() {
 
             {/* FORM (Calculator) */}
             <div className="bg-white text-black rounded-xl shadow-lg max-w-md md:min-w-lg md:mx-auto p-6">
-              <SendFlow />
+              <MoneyCalculator />
             </div>
 
             <div className="text-xl border border-neutral-300 hover:bg-neutral-700 px-4 py-2 text-center rounded-2xl cursor-pointer active:scale-95 hover:border-none">
