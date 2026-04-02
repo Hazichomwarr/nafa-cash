@@ -1,8 +1,9 @@
+// _components/Hero.tsx
 import { Container, Stack } from "@/components/ui";
 import Link from "next/link";
 import MoneyCalculator from "./forms/MoneyCalculator";
 
-export default function Hero() {
+export default function Hero({ rate }: { rate: number }) {
   return (
     <section className="relative min-h-screen py-18 bg-linear-to-br from-blue-700 to-orange-400 text-white">
       {/* BACKGROUND IMAGE */}
@@ -31,7 +32,7 @@ export default function Hero() {
 
             {/* FORM (Calculator) */}
             <div className="bg-white text-black rounded-xl shadow-lg max-w-md md:min-w-lg md:mx-auto p-6">
-              <MoneyCalculator />
+              <MoneyCalculator rate={rate} />
             </div>
 
             <div className="text-xl border border-neutral-300 hover:bg-neutral-700 px-4 py-2 text-center rounded-2xl cursor-pointer active:scale-95 hover:border-none">

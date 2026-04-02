@@ -3,17 +3,14 @@
 import { Prisma } from "@prisma/client";
 import { db } from "../db";
 
-export const getUserTransactions = (user_id: string) => {
+export const getUserTransactions = async (email: string) => {
+  const user = await db.user.findFirst({ where: { email } });
+
+  if (!user) return [];
+
   return db.transaction.findMany({
-    where: { id: user_id },
-    select: {
-      id: true,
-      amount: true,
-      status: true,
-      recipient: true,
-      country: true,
-      createdAt: true,
-    },
+    where: { senderId: user.id },
+    include: { recipient: true },
     orderBy: { createdAt: "desc" },
   });
 };

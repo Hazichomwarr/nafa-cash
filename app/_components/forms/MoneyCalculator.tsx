@@ -8,17 +8,17 @@ import { useRouter } from "next/navigation";
 export const AREAS_COVERED = [
   { slug: "USD", label: "United States (USD)" },
   { slug: "EUR", label: "Europe (EUR)" },
-  { slug: "QUID", label: "UNITED KINGDOM (UK)" },
+  { slug: "GBP", label: "UNITED KINGDOM (GBP)" },
   { slug: "CAD", label: "CANADA (CAD)" },
 ];
-export default function MoneyCalculator() {
+export default function MoneyCalculator({ rate }: { rate: number }) {
   const router = useRouter();
 
   const [currency, setCurrency] = useState<string>("USD");
   const [recipientName, setRecipientName] = useState<string>("");
   const [amountToSend, setAmountToSend] = useState<number>(100);
 
-  const { cfa } = convertToCfa(amountToSend, currency);
+  const { cfa } = convertToCfa(amountToSend, currency, rate);
 
   return (
     <Stack gap={4} className="max-w-2xl">

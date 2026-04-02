@@ -5,6 +5,7 @@ import {
   TransactionArray,
   TransactionType,
 } from "@/lib/queries/transactions";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 // const USER_ID = "8cfe3267-88f1-4bec-b9ad-73dbdecfabd5";
@@ -26,9 +27,17 @@ export default async function HistoryPage({ searchParams }: Props) {
           <h1 className="text-4xl font-bold text-neutral-900 tracking-tight md:text-6xl">
             Your Transfers
           </h1>
-          <p className="text-sm text-neutral-500">
-            Dernière mise à jour il y a quelques secondes
-          </p>
+          <div className="flex justify-between ">
+            <p className="text-sm text-neutral-500">
+              Dernière mise à jour il y a quelques secondes
+            </p>
+            <Link
+              href="/"
+              className=" underline text-blue-600 font-semibold hover:text-blue-700 hover:scale-105"
+            >
+              Acceuil
+            </Link>
+          </div>
           <Stack>
             {transactions.map((tx: TransactionType) => (
               <Card key={tx.id}>
@@ -45,11 +54,11 @@ export default async function HistoryPage({ searchParams }: Props) {
 }
 
 function TransactionItem({ tx }: { tx: TransactionType }) {
-  const map = {
+  const map: Record<string, Record<string, string>> = {
     PENDING: { label: "En attente", color: "text-yellow-600" },
-    PAID: { label: "Paiement reçu", color: "text-yellow-600" },
-    PROCESSING: { label: "En cours", color: "text-yellow-600" },
-    COMPLETED: { label: "Terminé", color: "text-green-600" },
+    PAID: { label: "Paiement reçu", color: "text-blue-600" },
+    PROCESSING: { label: "En cours d’envoi", color: "text-yellow-600" },
+    COMPLETED: { label: "Envoyé", color: "text-green-600" },
     CANCELLED: { label: "Échec", color: "text-red-600" },
   };
 

@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { stripe } from "@/lib/stripe";
-import { convertToCfa } from "@/lib/moneyConverter";
+import { convertToCfa, getCachedRate } from "@/lib/moneyConverter";
 
 export async function POST(req: NextRequest) {
   try {
@@ -33,21 +33,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
 
-    // 🧠 2. FIND OR CREATE USER
-    // const user = await db.user.upsert({
-    //   where: { email },
-    //   update: {
-    //     name: senderName,
-    //     phone: String(phone),
-    //     location: senderCountry,
-    //   },
-    //   create: {
-    //     name: senderName,
-    //     email,
-    //     phone: String(phone),
-    //     location: senderCountry,
-    //   },
-    // });
     // 1. Try find by email
     let user = await db.user.findUnique({
       where: { email },
@@ -103,7 +88,8 @@ export async function POST(req: NextRequest) {
     }
 
     // 🧠 4. CONVERT USD → CFA
-    const { cfa } = convertToCfa(amount, senderCountry);
+    const rate = await getCachedRate();
+    const { cfa } = convertToCfa(amount, senderCountry, rate);
 
     // 🧱 5. CREATE TRANSACTION
     const transaction = await db.transaction.create({
