@@ -33,6 +33,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
 
+    if (!amount || amount <= 10 || amount > 200) {
+      return NextResponse.json({ error: "Invalid amount" }, { status: 400 });
+    }
+
+    if (!recipientPhone || recipientPhone.length < 8) {
+      return NextResponse.json({ error: "Invalid phone" }, { status: 400 });
+    }
+
     // 1. Try find by email
     let user = await db.user.findUnique({
       where: { email },

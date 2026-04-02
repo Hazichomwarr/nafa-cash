@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { db } from "@/lib/db";
 import { stripe } from "@/lib/stripe";
+import { sendAdminNotification } from "@/lib/mail";
 
 export async function POST(req: NextRequest) {
   const body = await req.text(); // ⚠️ must be raw body
@@ -58,6 +59,24 @@ export async function POST(req: NextRequest) {
             stripePaymentStatus: "SUCCEEDED",
           },
         });
+
+        // fetch full transaction
+        const tx = await db.transaction.findFirst({
+          where: { id: transactionId },
+          include: { recipient: true },
+        });
+
+        if (tx) {
+          try {
+            await sendAdminNotification({
+              amount: tx!.amount,
+              recipientName: tx!.recipient.name,
+              phone: tx!.recipient.phone,
+            });
+          } catch (error) {
+            console.error("❌ SendGrid error:", error);
+          }
+        }
 
         console.log("✅ Payment completed:", transactionId);
         break;

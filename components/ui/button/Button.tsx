@@ -13,7 +13,7 @@ export function Button({
   ...props
 }: ButtonProps) {
   const base =
-    "inline-flex items-center justify-center px-4 py-2 rounded-md text-sm font-medium cursor-pointer active:scale-95 transition-colors duration-200";
+    "inline-flex items-center justify-center px-4 py-2 rounded-md text-sm font-medium cursor-pointer active:scale-95 transition-colors duration-200 disabled:bg-gray-400 disabled:text-gray-200 disabled:cursor-not-allowed disabled:shadow-none";
 
   return (
     <button className={`${base} ${variants[variant]} ${className}`} {...props}>
