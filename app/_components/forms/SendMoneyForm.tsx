@@ -168,7 +168,7 @@ export default function SendForm() {
               value={recipientCountry}
               onChange={(e) => setRecipientCountry(e.target.value)}
             >
-              <option value="" disabled selected>
+              <option value="" disabled>
                 Choisit le Pays
               </option>
               <option value="BF">Burkina Faso</option>

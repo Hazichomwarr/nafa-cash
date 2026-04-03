@@ -2,9 +2,11 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function proxy(req: NextRequest) {
-  const isAdminRoute = req.nextUrl.pathname.startsWith("/admin");
+  const pathname = req.nextUrl.pathname;
+  const isProtectedRoute =
+    pathname.startsWith("/admin") || pathname.startsWith("/api/admin");
 
-  if (!isAdminRoute) return NextResponse.next();
+  if (!isProtectedRoute) return NextResponse.next();
 
   const auth = req.headers.get("authorization");
 
@@ -20,7 +22,7 @@ export function proxy(req: NextRequest) {
   const base64 = auth.split(" ")[1];
   const decoded = atob(base64);
 
-  const [username, password] = decoded.split(":");
+  const [, password] = decoded.split(":");
 
   if (password === process.env.ADMIN_SECRET) {
     return NextResponse.next();
@@ -29,5 +31,5 @@ export function proxy(req: NextRequest) {
   return new NextResponse("Unauthorized", { status: 401 });
 }
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/admin/:path*", "/api/admin/:path*"],
 };
