@@ -2,9 +2,9 @@ import { Container } from "@/components/ui";
 
 export default function HowItWorks() {
   return (
-    <section id="how" className="py-16 bg-neutral-50">
+    <section id="how" className="py-16 bg-neutral-800">
       <Container>
-        <h2 className="text-2xl md:text-3xl font-bold text-center mb-10">
+        <h2 className="text-2xl md:text-3xl font-bold text-center mb-10 text-white">
           Comment ça marche ?
         </h2>
 
@@ -48,7 +48,7 @@ export default function HowItWorks() {
 
         {/* 🔥 TRUST LINE */}
         <div className="text-center mt-10">
-          <p className="text-sm text-neutral-500">
+          <p className="text-sm text-neutral-300">
             🔄 Suivi en temps réel • 🤝 Traitement humain • ⚡ Livraison rapide
           </p>
         </div>

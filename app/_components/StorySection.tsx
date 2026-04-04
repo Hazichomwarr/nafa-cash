@@ -38,7 +38,7 @@ export default function StorySection() {
                   target="_blank"
                   className="text-blue-700 hover:underline"
                 >
-                  RELAIS
+                  l{"'"}entrprise RELAIS
                 </a>{" "}
                 pour vous accompagner à distance : assistance locale, tâches,
                 urgences…
