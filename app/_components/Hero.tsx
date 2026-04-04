@@ -1,7 +1,7 @@
 // _components/Hero.tsx
 import { Container, Stack } from "@/components/ui";
-import Link from "next/link";
 import MoneyCalculator from "./forms/MoneyCalculator";
+import TrustSection from "./TrustSection";
 
 export default function Hero({ rate }: { rate: number }) {
   return (
@@ -22,22 +22,23 @@ export default function Hero({ rate }: { rate: number }) {
             {/* TEXT */}
             <Stack gap={4} className="text-center">
               <h1 className="text-4xl md:text-6xl font-bold">
-                Send Money to Burkina Faso
+                Envoyez de l’argent au Burkina Faso
               </h1>
-              <p className="text-lg text-neutral-200">Fast • Easy • Secure</p>
+
+              <p className="text-lg text-neutral-200">
+                Rapide • Simple • Fiable
+              </p>
+
               <p className="text-lg text-white/90">
-                Direct to Orange Money Wallet
+                Mobile Money ou retrait en cash
               </p>
             </Stack>
 
             {/* FORM (Calculator) */}
-            <div className="bg-white text-black rounded-xl shadow-lg max-w-md md:min-w-lg md:mx-auto p-6">
+            <div className="bg-white text-black rounded-xl shadow-lg md:min-w-lg p-6 md:max-w-md md:mx-auto">
               <MoneyCalculator rate={rate} />
             </div>
-
-            <div className="text-xl border border-neutral-300 hover:bg-neutral-700 px-4 py-2 text-center rounded-2xl cursor-pointer active:scale-95 hover:border-none">
-              <Link href="#missionStorySection">Our Mission</Link>
-            </div>
+            <TrustSection />
           </Stack>
         </Container>
       </div>
