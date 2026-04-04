@@ -10,7 +10,7 @@ export default function CTASection() {
         </p>
 
         <Link
-          className="bg-yellow-400 px-6 py-3 rounded-md font-semibold transition cursor-pointer hover:scale-105"
+          className="inline-block bg-yellow-400 px-6 py-3 rounded-md font-semibold transition cursor-pointer hover:bg-yellow-500 hover:scale-105"
           href="/send"
         >
           Envoyez maintenant

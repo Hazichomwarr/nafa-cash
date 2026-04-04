@@ -48,8 +48,9 @@ export default function HowItWorks() {
 
         {/* 🔥 TRUST LINE */}
         <div className="text-center mt-10">
-          <p className="text-sm text-neutral-300">
-            🔄 Suivi en temps réel • 🤝 Traitement humain • ⚡ Livraison rapide
+          <p className="flex justify-center gap-2 text-sm text-neutral-300">
+            <span>🔄 Suivi en temps réel </span> •
+            <span>🤝 Traitement humain </span> • <span>⚡Livraison rapide</span>
           </p>
         </div>
       </Container>
